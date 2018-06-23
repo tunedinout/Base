@@ -3,6 +3,7 @@
 #include <cstdlib>
 #define null NULL
 using namespace std;
+//generic heap 
 class Heap{
   private :
   int MAX_SIZE;
@@ -44,7 +45,7 @@ class Heap{
 
     if(r < heap_size && arr[r] > arr[largest])
     largest = r;
-    
+
 
     if(largest != i){
       int temp = arr[largest];
