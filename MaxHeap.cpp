@@ -3,7 +3,7 @@
 #include <cstdlib>
 #define null NULL
 using namespace std;
-//generic heap 
+//generic heap
 template<class T>
 class Heap{
   private :
@@ -17,7 +17,7 @@ class Heap{
     MAX_SIZE = maxSize;
     heap_size = 0;
     priority = new int[maxSize];
-   
+
     data = new T*[maxSize];
   }
   int getMaxSize(){
@@ -38,8 +38,8 @@ class Heap{
   int getMax(){
     return priority[0];
   }
-  
-  
+
+
   //sinks down erroneous value
   void maxHeapify(int i){
 
@@ -71,7 +71,7 @@ class Heap{
     priority[0] = priority[heap_size-1];
     data[0] = data[heap_size-1];
 
-   
+
     heap_size--;
     maxHeapify(0);
     return max;
@@ -97,7 +97,7 @@ class Heap{
       priority[parent(i)] = priority[i];
       priority[i] = temp;
 
-     
+
 
       T *t = data[i];
       data[i] = data[parent(i)];
@@ -128,7 +128,7 @@ class Heap{
       cout << endl;
     }
   }
-  
+
   void printHeapArray(){
     cout << " ------ Priority array ------------------- "<<endl;
         for(int i=0;i<heap_size;i++){
@@ -161,32 +161,32 @@ public:
 
   }
   void print(){
-    cout <<src <<"-----> " <<dest<<" | "<<weight<<" |"; 
+    cout <<src <<"-----> " <<dest<<" | "<<weight<<" |";
   }
 };
 
 
 int main(int argc, char const *argv[]) {
   Heap <EDGE>* pq = new Heap<EDGE>(100,0);
- 
+
   EDGE *edge ;
   int src,dest,weight;
   int edgeNo ;
   cin >> edgeNo;
   for(int i=0;i<edgeNo;i++){
-  
+
     cin >> src >> dest >> weight;
     edge = new EDGE(src,dest,weight);
     pq->insertKey(weight,edge);
   }
   pq->print();
-  
+
   pq->printHeapArray();
   int s_heap = pq->getSize();
   for(int i=0;i<s_heap;i++){
     edge = pq->getData(0);
     cout << " The max edge is " ;
-    edge->print();  
+    edge->print();
     cout << endl;
     pq->extractMax();
 
@@ -194,7 +194,7 @@ int main(int argc, char const *argv[]) {
 
     pq->printHeapArray();*/
   }
-  
+
 
 
 
