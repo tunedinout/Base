@@ -681,7 +681,8 @@ void MSTKruskal(graph *g){
 
 }
 void MSTPrims(graph *g){
-	
+		//since we are finding minimum spanning tree
+		
 }
 //ifAdded = if added in the list
 void DFS_postorder(graph *g,int v){
