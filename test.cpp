@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
+#include "MinHeap.hpp"
 using namespace std;
 void refer(int &t){
   t++;
@@ -32,6 +33,10 @@ public:
   //weightless EDGE
   Edge(int a,int b){
     dest = b;src = a;weight = 0;
+  }
+
+  void print(){
+    cout << src <<" --->"<<dest<<" |"<<weight<<"| ";
   }
 };
 class lessThanEdge{
@@ -71,17 +76,21 @@ int main(int argc, char const *argv[]) {
   //
   // cout << arr[0] << endl;
 
-  vector<pair<int,Edge*>> v;
-  pair <int,Edge*> p;
-  p = make_pair(8,new Edge(5,6,7));
-  v.push_back(p);
+  // vector<pair<int,Edge*>> v;
+  // pair <int,Edge*> p;
+  // p = make_pair(8,new Edge(5,6,7));
+  // v.push_back(p);
+  //
+  //
+  // cout <<v[0].first<<" "<<(v[0].second)->src << endl;
+  //
+  //
+  // pair<int,Edge*>* p1 = bar(v);
+  // cout << p1->first << endl;
+  //
+  // for(std::vector<pair<int,Edge*>>::iterator it = v.begin();it!=v.end();++it);
+    MinHeap<Edge> minHeap;
+    minHeap.insertKey(6,new Edge(4,5,5));
 
 
-  cout <<v[0].first<<" "<<(v[0].second)->src << endl;
-
-
-  pair<int,Edge*>* p1 = bar(v);
-  cout << p1->first << endl;
-
-  for(std::vector<pair<int,Edge*>>::iterator it = v.begin();it!=v.end();++it);
 }

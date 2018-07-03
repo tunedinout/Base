@@ -143,40 +143,40 @@ class MinHeap{
     return temp;
   }
 };
-class Edge{
-  public :
-  int src;
-  int dest;
-  int weight;
-
-  Edge(int a,int b,int c){
-    src = a;dest = b; weight = c;
-  }
-  Edge(){}
-
-    void print(){
-    cout << src<<" ---> " << dest << " | "<<weight;
-  }
-};
-
-
-int main(int argc, char const *argv[]) {
-  MinHeap<Edge> minHeap;
-  int size ;
-  cin >> size;
-  for(int i=0;i<size;i++){
-    int src ,dest , weight;
-    cin >> src >> dest >> weight;
-
-    minHeap.insertKey(weight,new Edge(src,dest,weight));
-  }
-
-  int s = minHeap.getSize();
-  for(int i=0;i<s;i++){
-    pair <int,Edge*> *p = minHeap.extractMin();
-    p->second->print();cout << endl;
-  }
-
-
-  return 0;
-}
+// class Edge{
+//   public :
+//   int src;
+//   int dest;
+//   int weight;
+//
+//   Edge(int a,int b,int c){
+//     src = a;dest = b; weight = c;
+//   }
+//   Edge(){}
+//
+//     void print(){
+//     cout << src<<" ---> " << dest << " | "<<weight;
+//   }
+// };
+//
+//
+// int main(int argc, char const *argv[]) {
+//   MinHeap<Edge> minHeap;
+//   int size ;
+//   cin >> size;
+//   for(int i=0;i<size;i++){
+//     int src ,dest , weight;
+//     cin >> src >> dest >> weight;
+//
+//     minHeap.insertKey(weight,new Edge(src,dest,weight));
+//   }
+//
+//   int s = minHeap.getSize();
+//   for(int i=0;i<s;i++){
+//     pair <int,Edge*> *p = minHeap.extractMin();
+//     p->second->print();cout << endl;
+//   }
+//
+//
+//   return 0;
+// }
