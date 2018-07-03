@@ -1,30 +1,24 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
-#define null NULL
+#include <vector>
+#include <utility>
 using namespace std;
-//generic heap
-template<class T>
-class Heap{
-  private :
-  int MAX_SIZE;
-  int heap_size;
-  int *priority;
-  int *mapping_index;
-  T **data;
-  public :
-  Heap(int maxSize,int heapSize){
-    MAX_SIZE = maxSize;
-    heap_size = 0;
-    priority = new int[maxSize];
 
-    data = new T*[maxSize];
-  }
-  int getMaxSize(){
-    return MAX_SIZE;
-  }
+//generic MaxHeap
+template <class T>
+class MaxHeap{
+	private :
+
+  //first key will be the priority
+  //second will be pointer to the object associate with it
+  vector<pair<int,T*>*> v;
+
+
+  public :
+
   int getSize(){
-    return heap_size;
+    return (int)v.size();
   }
   int parent(int i){
     return (i-1)/2;
@@ -35,183 +29,152 @@ class Heap{
   int right(int i){
     return 2*i + 2;
   }
-  int getMax(){
-    return priority[0];
+  int getMin(){
+    if(v.size()==0){
+      cout << "ERROR : No Elements in the MaxHeap";
+      exit(0);
+    }
+
+    return v[0]->first;
   }
 
 
   //sinks down erroneous value
+  //iterative version
   void maxHeapify(int i){
-
-    int l = left(i),r = right(i);
+    int p = i,l,r;
     int largest = 0;
-    if(l < heap_size && priority[l] > priority[i])
-    largest = l;
-    else
-    largest = i;
+    while(p<v.size()){
+      l = left(p);r = right(p);
 
-    if(r < heap_size && priority[r] > priority[largest])
-    largest = r;
+      if(l < v.size()&&v[l]->first > v[p]->first)
+      largest = l;
+      else
+      largest = p;
 
+      if(r < v.size()&& v[largest]->first < v[r]->first)
+      largest = r;
 
-    if(largest != i){
-      int temp = priority[largest];
-      priority[largest] = priority[i];
-      priority[i] = temp;
+      //exchange
+      if(largest!=p){
+        pair<int,T*> * temp = new pair<int,T*> (v[p]->first,v[p]->second);
+        v[p] = v[largest];
+        v[largest] = temp;
 
-      T *t = data[i];
-      data[i] = data[largest];
-      data[largest] = t;
+        p = largest;
+      }else
+      break;
 
-      maxHeapify(largest);
     }
+
   }
-  int extractMax(){
-    int max = priority[0];
-    priority[0] = priority[heap_size-1];
-    data[0] = data[heap_size-1];
+  //remove and return the max priority with the object
+  pair<int,T*>* extractMax(){
+    pair<int,T*> *p;
+    p = v[0];
+
+    int size = v.size();
+    pair<int,T*> *lastElement = v[size-1];
+    v[0]=lastElement;
+    v.resize(size-1);
 
 
-    heap_size--;
     maxHeapify(0);
-    return max;
+    return p;
   }
 
   //increase to key && key > priority[i]
   // after this func call priority[i] = key
   //where key was bigger than priority[i]
   void increaseKey(int i,int key){
-    if(key < priority[i]){
-      cout <<"ERROR new key is smaller than current value" <<endl;
+    if(key < v[i]->first){
+      cout <<"ERROR new key is smaller than existing key." << endl;
+      return;
     }
 
-    priority[i] = key;
-    // here a call to max heapify can not be made maxHeapify
-    //as maxHeapify assumes that the parent's left and right child
-    //is greater
-    //here the A[i]'s parent could be smaller
-    //so to correct the tree we will go up and fix it
+    //on increasing the key the heap property for maxHeap holds for its subtree
+    //but not for it parents
 
-    while (i >=0 && priority[parent(i)] < priority[i]){
-      int temp = priority[parent(i)];
-      priority[parent(i)] = priority[i];
-      priority[i] = temp;
-
-
-
-      T *t = data[i];
-      data[i] = data[parent(i)];
-      data[parent(i)] = t;
+    //it must be moved up to its right place
+    v[i]->first = key;
+    while(i >0 && v[i]->first > v[parent(i)]->first){
+      //exchange with parents
+      pair<int,T*> *temp = v[i];
+      v[i] = v[parent(i)];
+      v[parent(i)] = temp;
       i = parent(i);
     }
-    //it can be shown that above sync-up heapify is logarithmic
   }
 
 
   void insertKey(int key,T *t){
-    heap_size++;
-    priority[heap_size-1]=INT_MIN;
-    data[heap_size-1] = t;
-    increaseKey(heap_size-1,key);
-  }
+    v.push_back(new pair<int,T*>(INT_MIN,t));
 
-  void print(){
-    for(int i=0;i<heap_size;i++){
-      cout << priority[i] << ": ";
-      if(left(i)<heap_size)
-        cout<<priority[left(i)] << " ";
-
-
-      if(right(i)<heap_size)
-        cout << priority[right(i)];
-
-      cout << endl;
-    }
+    increaseKey(v.size()-1,key);
   }
 
   void printHeapArray(){
-    cout << " ------ Priority array ------------------- "<<endl;
-        for(int i=0;i<heap_size;i++){
-          cout <<"priority["<<i<<"] ="<<priority[i]<<endl;
-        }
+    cout <<"Print MaxHeap by priority and data------------------------"<<endl;
+    //iteration require the typename
+    // for( vector<pair<int,T*>>::iterator it = v.begin();it != v.end();++it){
+    //   cout <<(*it)->first<<" "<<(*it)->second->print()<<endl;
+    // }
 
-        cout <<"  ------------------------------------------ "<<endl;
+    for(int i=0;i<v.size();i++)
+    cout << v[i]->first<< " "<<(v[i]->second) ->print()<<endl;
+    cout <<" ----------   xxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------"<<endl;
   }
-  T* getData(int i){
-    T *x  = data[i];
-    x->print();
-    cout << endl;
-    return x;
-  }
-};
 
-class EDGE{
-public:
-  int dest;
-  int src;
-  int weight;
-  EDGE(int a,int b,int c){
-    dest = b;src = a;weight = c;
-  }
-  //weightless EDGE
-  EDGE(int a,int b){
-    dest = b;src = a;weight = 0;
-  }
-  EDGE(){
-
-  }
   void print(){
-    cout <<src <<"-----> " <<dest<<" | "<<weight<<" |";
+
+      for(int i=0;i<v.size();i++){
+        cout << v[i]->first <<" : ";
+
+        if(left(i)  < v.size() )
+          cout << v[left(i)]->first <<" ";
+
+        if(right(i) < v.size())
+          cout << v[right(i)]->second ;
+        cout <<endl;
+      }
+  }
+  pair<int,T*>* getData(int i){
+
+    pair<int,T*>* temp = v[i];
+    return temp;
+  }
+};
+class Edge{
+  public :
+  int src;
+  int dest;
+  int weight;
+
+  Edge(int a,int b,int c){
+    src = a;dest = b; weight = c;
+  }
+  Edge(){}
+
+    void print(){
+    cout << src<<" ---> " << dest << " | "<<weight;
   }
 };
 
-
-int main(int argc, char const *argv[]) {
-  Heap <EDGE>* pq = new Heap<EDGE>(100,0);
-
-  EDGE *edge ;
-  int src,dest,weight;
-  int edgeNo ;
-  cin >> edgeNo;
-  for(int i=0;i<edgeNo;i++){
-
-    cin >> src >> dest >> weight;
-    edge = new EDGE(src,dest,weight);
-    pq->insertKey(weight,edge);
-  }
-  pq->print();
-
-  pq->printHeapArray();
-  int s_heap = pq->getSize();
-  for(int i=0;i<s_heap;i++){
-    edge = pq->getData(0);
-    cout << " The max edge is " ;
-    edge->print();
-    cout << endl;
-    pq->extractMax();
-
-    /*pq->print();
-
-    pq->printHeapArray();*/
-  }
-
-
-
-
-
-  /*Heap *heap = new Heap(100,0);
-  int size;
+int main(int argc, char const *argv[]){
+  MaxHeap<Edge> maxHeap;
+  int size ;
   cin >> size;
   for(int i=0;i<size;i++){
-    int a;
-    cin >>  a;
-    heap->insertKey(a);
+    int src ,dest , weight;
+    cin >> src >> dest >> weight;
+
+    maxHeap.insertKey(weight,new Edge(src,dest,weight));
   }
-  heap->print();
-  int max = heap -> extractMax();
-  heap->print();*/
+
+  int s = maxHeap.getSize();
+  for(int i=0;i<s;i++){
+    pair <int,Edge*> *p = maxHeap.extractMax();
+    p->second->print();cout << endl;
+  }
   return 0;
-
-
-
 }

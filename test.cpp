@@ -49,6 +49,9 @@ void createArray(int size){
 
   arr = arr1;
 }
+pair<int,Edge*>* bar(vector<pair<int,Edge*>> v){
+  return &v[0];
+}
 int main(int argc, char const *argv[]) {
   //node *n = func(8);
   // cout << n->next->data << " ";
@@ -62,14 +65,23 @@ int main(int argc, char const *argv[]) {
   //
   // for(vector <Edge*>::iterator it = edges.begin() ;it!=edges.end();++it)
   //     cout << (*it) -> src << " "<<(*it) -> dest << " weight="<<(*it) -> weight << endl;
-  int size ;
-  cin >> size;
-  createArray(7);
+  // int size ;
+  // cin >> size;
+  // createArray(7);
+  //
+  // cout << arr[0] << endl;
 
-  cout << arr[0] << endl;
+  vector<pair<int,Edge*>> v;
+  pair <int,Edge*> p;
+  p = make_pair(8,new Edge(5,6,7));
+  v.push_back(p);
 
 
+  cout <<v[0].first<<" "<<(v[0].second)->src << endl;
 
 
+  pair<int,Edge*>* p1 = bar(v);
+  cout << p1->first << endl;
 
+  for(std::vector<pair<int,Edge*>>::iterator it = v.begin();it!=v.end();++it);
 }
