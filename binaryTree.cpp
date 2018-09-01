@@ -38,7 +38,7 @@ void insert_in_btree(btree_node **root,int d){
 			}
 		}
 
-		//find the right node 
+		//find the right node
 		if(d <= prev->data)
 			prev->left = new btree_node(d,NULL,NULL);
 		else
@@ -51,7 +51,7 @@ class q_node{
 	public :
 	btree_node *element;
 	q_node *next;
-	
+
 };
 q_node *head=NULL;
 q_node *tail=NULL;
@@ -68,7 +68,7 @@ void push(btree_node *ptr){
 		tail->next = node;
 		tail = node;
 	}
-	
+
 }
 btree_node *pop(){
 	if(head == NULL)
@@ -94,7 +94,7 @@ void print_reg(btree_node *root){
 	if(root == NULL)
 		return;
 
-	
+
 	btree_node *temp = root;
 	while(temp != NULL){
 
@@ -123,7 +123,7 @@ void input(btree_node **root){
 void exact_tree_input(btree_node **root){
 	stack<btree_node*> st;
 	cout<<"For NULL child enter -1"<<endl;
-	
+
 	int k;
 	cin>>k;
 	if(k==-1)
@@ -228,7 +228,7 @@ void print_level_order_newline(btree_node *root){
 	node *ptr;
 	ptr = NULL;
 	while(1){
-		
+
 		ptr = pop_node_first(&head,&tail);
 
 		if(ptr == NULL || ptr->element == NULL)
@@ -246,7 +246,7 @@ void print_level_order_newline(btree_node *root){
 		push_node_last(&head,&tail,NULL);
 		cout<<endl;
 	}
-	
+
 }
 //height of a node is the number of edges on the longest path from the node to a leaf
 int height(btree_node *node){
@@ -266,7 +266,7 @@ void print_level_order_newline_recur(btree_node *node,int height){
 		print_level_order_newline_recur(node->right,height-1);
 	}
 
-	
+
 }
 void print_level_order_newline_recursive(btree_node *root){
 	int h = height(root);
@@ -292,12 +292,12 @@ void inorder_iterative(btree_node *root){
 			current = temp->element->right;
 		}
 
-		
+
 
 		if(current!=NULL){
 			push_node_first(&head,&tail,current);
 			current=current->left;
-			
+
 		}
 
 		if(head==NULL)
@@ -322,7 +322,7 @@ void preorder_iterative(btree_node *root){
 			push_node_first(&head,&tail,ptr->element->right);
 		if(ptr->element->left!=NULL)
 			push_node_first(&head,&tail,ptr->element->left);
-		
+
 
 	}
 
@@ -367,7 +367,7 @@ void postorder_iterative_single_stack(btree_node *root){
 				cout<<last_poped->data<<" ";
 		}
 	}
-	
+
 	cout<<endl;
 
 }
@@ -383,7 +383,7 @@ void inorder_morris_traversal(btree_node *root){
 			cout<<current->data<<" ";
 			current = current ->right;
 		}else{
-			//find the right most node of currents left child and set 
+			//find the right most node of currents left child and set
 			//its right chld to current (this will be the current nodes inorder predecessor )
 
 			pre = current->left;
@@ -398,7 +398,7 @@ void inorder_morris_traversal(btree_node *root){
 
 			else{
 				pre->right = NULL;
-				//since pre->right was equal to current 
+				//since pre->right was equal to current
 				//means we are done with the left subtree
 				cout << current->data << " ";
 				current = current -> right;
@@ -417,7 +417,7 @@ void preorder_morris_traversal(btree_node *root){
 			cout<<current->data<<" ";
 			current = current ->right;
 		}else{
-			//find the right most node of currents left child and set 
+			//find the right most node of currents left child and set
 			//its right chld to current (this will be the current nodes inorder predecessor )
 
 			pre = current->left;
@@ -435,7 +435,7 @@ void preorder_morris_traversal(btree_node *root){
 
 			else{
 				pre->right = NULL;
-				//since pre->right was equal to current 
+				//since pre->right was equal to current
 				//means we are done with the left subtree
 				current = current -> right;
 			}
@@ -447,13 +447,13 @@ void postorder_morris_traversal(btree_node *root){
 	if(root == NULL)
 		return;
 
-	///morris traversal cant help in postorder since 
-	//after visiting the root of the left child of the 
-	//left subtree we need a link to the right of 
+	///morris traversal cant help in postorder since
+	//after visiting the root of the left child of the
+	//left subtree we need a link to the right of
 	//the root node
 
 }
-//maximum depth or height iterative 
+//maximum depth or height iterative
 int maximum_depth_recursive(int depth,btree_node *current){
 	if(current == NULL)
 		return depth;
@@ -464,18 +464,18 @@ int maximum_depth_recursive(int depth,btree_node *current){
 			b = maximum_depth_recursive(depth+1,current->right);
 
 		return a>b?a:b;
-	} 
+	}
 
 }
 
-//maximum depth or height recursive 
+//maximum depth or height recursive
 int maximum_depth_iterative(btree_node *root){
 	if(root == NULL)
 		return 0;
 
-	//we do a level order traversal 
+	//we do a level order traversal
 	//to mark end of the level we use a
-	//dummy node 
+	//dummy node
 
 	node *head = NULL;
 	node *tail = NULL;
@@ -484,7 +484,7 @@ int maximum_depth_iterative(btree_node *root){
 	int depth = 0;
 	node *ptr = NULL;
 	while(1){
-		
+
 		depth++;
 
 		ptr = pop_node_first(&head,&tail);
@@ -499,7 +499,7 @@ int maximum_depth_iterative(btree_node *root){
 			ptr = pop_node_first(&head,&tail);
 		}
 
-		
+
 		push_node_last(&head,&tail,NULL);
 	}
 
@@ -545,7 +545,7 @@ int maximum_depth_iterative_postorder(btree_node *root){
 
 	return m_d;
 }
-//can we find maximum depth without using 
+//can we find maximum depth without using
 //stack i.e via MORRIS TRAVERSAL
 int maximum_depth_iterative_morris(btree_node *root){
 	if(root == NULL)
@@ -556,10 +556,10 @@ int maximum_depth_iterative_morris(btree_node *root){
 	btree_node *pre = NULL;
 	int maxDepth = 0;
 	int current_depth=0;
-	
+
 	while(current!=NULL){
 		if(current->left == NULL){
-			//not possible 
+			//not possible
 				// while doing morris traversal
 				// if c->left == null ; c= c->right; if c is not null after this we would do current_depth++
 													//which is right
@@ -586,16 +586,16 @@ int maximum_depth_iterative_morris(btree_node *root){
 				current_depth = current_depth - pathlength ;
 				current = current->right;
 			}
-				 
+
 
 		}else{
-			//find the right most node of currents left child and set 
+			//find the right most node of currents left child and set
 			//its right chld to current (this will be the current nodes inorder predecessor )
 			pre = current->left;
 			int pathlength = 0;
 			while(pre->right!=NULL && pre->right!=current){
 				pathlength++;
-				pre = pre->right;	
+				pre = pre->right;
 			}
 
 			if(pre->right == NULL){
@@ -624,7 +624,7 @@ int size_of_tree_recursive(btree_node *root){
 	int a=0,b=0;
 	if(root->left!=NULL)
 		a = size_of_tree_recursive(root->left);
-	
+
 	if(root->right!=NULL)
 		b = size_of_tree_recursive(root->right);
 
@@ -634,7 +634,7 @@ int size_of_tree_recursive(btree_node *root){
 int size_of_tree_iterative(btree_node *root){
 	if(root == NULL)
 		return 0;
-	///we simply use level order traversal 
+	///we simply use level order traversal
 	//and count every non-null element in the stack
 
 	node *head = NULL;
@@ -835,10 +835,10 @@ int search_in_array(int arr[],int element,int l,int r){
 
 }
 //complexity o(n^2)
-//complexity can be brought down to 
+//complexity can be brought down to
 //nlogn by implying binary search
 class range{
-	private : 
+	private :
 	int start;
 	int end;
 public:
@@ -863,13 +863,13 @@ public:
 		// Case 2 :[L+1 --- R] L is the index of node whose right subtree is in [L+1-----R]
 
 		//when an element is popped if L is set true then the popped range is treated
-		//as such in case : 1 and case 2 depending on the value of L 
+		//as such in case : 1 and case 2 depending on the value of L
 
 
 		//after each iteration the value of L is chosen by the below rationale
 		//A : if we could push  a right tree
-		//B : if we could push  a left subtree 
-		
+		//B : if we could push  a left subtree
+
 		//A && B : L = true
 		//~A && B : L = true
 		//A  && ~B : L = false
@@ -945,18 +945,71 @@ btree_node *construct_tree_inorder_preorder(int inorder[],int preorder[],int siz
 
 	return el[inx[0]];
 }
+
+
+//took a while to realise this
+
+//if we just keep attaching left nodes
+//storing the current and previous pointer to visitedNodes
+//in each step either assign current to previous -> left or
+//get something out of stack and make current -> right
+//since only two scenarios are possible if we make sure to attach left nodes as we go
+//then we wont have to back track for attaching left nodes i.e in forward iteration
+// if we make sure no left node to be attached was left , then we need to backtrack for
+//attaching right nodes
+btree_node * construct_tree_inorder_preorder_simple(int inorder[],int preorder[],int size){
+	int inx[size];
+	stack<int> st;
+	//element array holds the refrences of btree_node
+	btree_node *el[size];
+
+	for(int i=0;i<size;i++)
+		for(int j = 0;j<size;j++)
+			if(preorder[i] == inorder[j])
+			inx[i] = j;
+
+		btree_node *root = new btree_node(preorder[0]);
+		el[0] = root;
+
+		int current_pre_index = 0;
+		int prev_pre_index = -1;
+
+		for(int i=1;i<size;i++){
+			prev_pre_index = current_pre_index;
+
+			el[i] = new btree_node(preorder[i]);
+			current_pre_index = i;
+
+			if(inx[current_pre_index] < inx[prev_pre_index]){
+				el[prev_pre_index]->left = el[current_pre_index];
+				st.push(prev_pre_index);
+			}else{
+				while(!st.empty() && inx[current_pre_index] >= inx[st.top()]){
+					prev_pre_index = st.top();
+					st.pop();
+				}
+
+				el[prev_pre_index] -> right = el[current_pre_index];
+
+			}
+		}
+
+
+
+	return root;
+}
 //CONSTRUCT TREE FROM INORDER AND POSTORDER
-// it's the same algo as above 
-//but in this we process the right chld 
+// it's the same algo as above
+//but in this we process the right chld
 //and put left child to be created later
 //also we scan the postorder array from
 //the last
-//This goes with the understanding 
+//This goes with the understanding
 //that postorder is reverse of preorder
 //and in this reverse order
-//the right node will always be encountered 
+//the right node will always be encountered
 //first after root
-//this is why in this algo we process the right node 
+//this is why in this algo we process the right node
 //and put the left subtree in the stack
 btree_node *construct_tree_inorder_postorder(int inorder[],int postorder[],int size){
 
@@ -984,7 +1037,7 @@ btree_node *construct_tree_inorder_postorder(int inorder[],int postorder[],int s
 			st.push(new range(c,m));
 		if(m!=e)
 			st.push(new range(m,e));
-		
+
 		if(m==e)
 			L = true;
 
@@ -1040,19 +1093,19 @@ int locate_min_index_element(int arr1[],int arr2[],int start ,int end,int size){
 
 	return lowest_so_far;
 }
-//two parallel stacks are used 
-//one to store the nodes 
+//two parallel stacks are used
+//one to store the nodes
 //other to store the right subtree
 //start and end indices in inorder
-//To decrease the complexity 
+//To decrease the complexity
 //we need to construct a segment tree
 //which can answer the query:
 //for a given range in inorder array
-//all the elements that are 
+//all the elements that are
 //present in this range
 //, which one occurs the earliest(least index)
 //in the level order array
-//ouput the index of this element in 
+//ouput the index of this element in
 //the level order array
 btree_node *construct_tree_level_order_inorder(int inorder[],int levelOrder[],int size){
 
@@ -1107,7 +1160,7 @@ btree_node *construct_tree_level_order_inorder(int inorder[],int levelOrder[],in
 			return null;
 		}
 
-		
+
 		ds2.push(new range (start,indexChild-1));
 		ds2.push(new range (indexChild+1,end));
 		ds1.push(temp);
@@ -1120,7 +1173,7 @@ btree_node *construct_tree_level_order_inorder(int inorder[],int levelOrder[],in
 			front -> right = temp;
 			ds1.pop();
 		}
-		
+
 		l_i++;
 	}
 
@@ -1136,8 +1189,8 @@ btree_node *construct_tree_level_order_inorder(int inorder[],int levelOrder[],in
 //SEARCH TREE I.E LEFT CHILD LESS
 //THAN ROOT AND OPP. FOR LEFT CHILD
 //The complexity is O(n)
-//since each element in the 
-//array is processed once  
+//since each element in the
+//array is processed once
 btree_node *construct_tree_level_order(int lv[],int size){
 	node *head = NULL;
 	node *tail = NULL;
@@ -1204,7 +1257,7 @@ void print_root_leaf_morris(btree_node *root){
 					cout<<path_array[i]<<" ";
 				cout<<endl;
 			}
-			
+
 			if(current!=NULL)
 			path_array[++last]=current->data;;
 		}else{
@@ -1221,17 +1274,17 @@ void print_root_leaf_morris(btree_node *root){
 
 			else{
 
-				//The condition of leaf hold when 
+				//The condition of leaf hold when
 				//right and left are both NULL
-				//pre->right == current 
-				//implies without this, this node 
+				//pre->right == current
+				//implies without this, this node
 				//was a leaf
 				if(pre->left == NULL){
 					for(int i=0;i<last;i++)
 						cout<<path_array[i]<<" ";
 					cout<<endl;
 				}
-				
+
 				//time to remove some elements
 				//the root must have been added to
 				//the path_arry
@@ -1248,8 +1301,8 @@ void print_root_leaf_morris(btree_node *root){
 				if(current!=NULL)
 					path_array[++last]=current->data;
 
-				
-				
+
+
 			}
 		}
 
@@ -1269,7 +1322,7 @@ void print_lCA_morris(btree_node *root,int key1, int key2){
 	bool found1=false,found2=false;
 	btree_node *current = root;
 	while(current!=NULL){
-		if(current->data == key1)
+		if(current->data == key1){
 			if(!found1&&!found2){
 				found1 = true;
 
@@ -1278,10 +1331,13 @@ void print_lCA_morris(btree_node *root,int key1, int key2){
 					last_aux=i;
 				}
 
-			}else if(found2 == true)
-			break;
+			}else if(found2 == true){
+				break;
+			}
+		}
 
-		if(current->data==key2)
+
+		if(current->data==key2){
 			if(!found1&&!found2){
 				found2 = true;
 
@@ -1293,6 +1349,7 @@ void print_lCA_morris(btree_node *root,int key1, int key2){
 			else if(found1 == true){
 				break;
 			}
+		}
 
 
 
@@ -1340,30 +1397,13 @@ void print_lCA_morris(btree_node *root,int key1, int key2){
 	//which is common to both the path arrays
 	//and print it
 }
-//checks if the given tree is binary tree or binary searach tree
-bool ifBST(btree_node *root){
-	if(root == NULL)
-		return true;
-	btree_node *current = root;
-	btree_node *pre ;
-	int prev_data = root->data;
-	int curr_data = root->data;
-	while(current!=NULL){
-		if(current->left == NULL){
-			prev_data=curr_data;
-			curr_data=current->data;
-			current=current->right;
-		}else{
-			pre = current->left;
-		}
-	}
-}
+
 
 //finds the size of largest BST subtree in a bst
 //RECURSIVE METHOD
 //helper
 int find_largest_bst_subtree_finder(btree_node *root,int *max_value,int *min_value,bool *is_bst,int *largest_size_bst){
-	
+
 
 	if(root==NULL){
 		*max_value=INT_MIN;
@@ -1398,14 +1438,14 @@ int find_largest_bst_subtree_finder(btree_node *root,int *max_value,int *min_val
 	}else{
 		*largest_size_bst = left_sub_bst_size>right_sub_bst_size?left_sub_bst_size:right_sub_bst_size;
 		*is_bst = false;
-		
+
 	}
 		*max_value=right_sub_max>left_sub_max?right_sub_max:left_sub_max;
 		*max_value=(*max_value)>root->data?(*max_value):root->data;
 		*min_value=right_sub_min<left_sub_min?right_sub_min:left_sub_min;
 		*min_value=(*min_value)<root->data?(*min_value):root->data;
 
-		
+
 
 	return *largest_size_bst;
 }
@@ -1419,10 +1459,10 @@ int find_largest_bst_subtree(btree_node *root){
 }
 //iterative solution : unable to find
 int main(int argc, char const *argv[])
-{	
-	btree_node *root = NULL;
-	exact_tree_input(&root);
-	print_reg(root);
+{
+	// btree_node *root = NULL;
+	// exact_tree_input(&root);
+	// print_reg(root);
 
 	/*convert_to_mirror(root);
 	print_reg(root);*/
@@ -1431,21 +1471,26 @@ int main(int argc, char const *argv[])
 	cout <<"height is = "<<height(search(root,node_value))<<endl;*/
 	//print_level_order_newline_recursive(root);
 	//cout << maximum_depth_iterative_morris(root) <<endl;
-	inorder_morris_traversal(root);
-	cout<<endl;
-	print_level_order_newline(root);
-	cout<<endl;
+	// inorder_morris_traversal(root);
+	// cout<<endl;
+	// print_level_order_newline(root);
+	// cout<<endl;
 
 	int size; cin >>size;
 	int inorder[size];
-	int postorder[size];
+	int preorder[size];
 	for(int i=0;i<size;i++)
 		cin >> inorder[i];
 	for(int i=0;i<size;i++)
-		cin >> postorder[i];
+		cin >> preorder[i];
 
-	root = construct_tree_level_order_inorder(inorder,postorder,size);
+	btree_node *root = construct_tree_inorder_preorder(inorder,preorder,size);
 
+	print_reg(root);
+
+	root = construct_tree_inorder_preorder_simple(inorder,preorder,size);
+
+	cout << " ----------------------      "<<endl;
 	print_reg(root);
 	return 0;
 }

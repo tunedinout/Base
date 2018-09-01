@@ -23,15 +23,15 @@ void insert(BSTNode **root,BSTNode *current,int key){
 		return;
 	}
 
-	
+
 	if(key<current->data){
 		if(current->left!=NULL)
 			insert(root,current->left,key);
 		else{
-			current->left = new BSTNode(key);	
+			current->left = new BSTNode(key);
 			return;
 		}
-		
+
 	}
 	else if(key>current->data){
 		if(current->right!=NULL){
@@ -77,7 +77,7 @@ void BSTInsert(BSTNode **root){
 void exact_tree_input(BSTNode **root){
 	stack<BSTNode*> st;
 	cout<<"For NULL child enter -1"<<endl;
-	
+
 	int k;
 	cin>>k;
 	if(k==-1)
@@ -118,8 +118,8 @@ BSTNode* search(BSTNode *root,int key){
 
 	else if(key>root->data)
 	return search(root->right,key);
-	
-	
+
+
 }
 //returns pointer to minimum value
 BSTNode * min_value_bst(BSTNode *root){
@@ -129,10 +129,7 @@ BSTNode * min_value_bst(BSTNode *root){
 	return current;
 
 }
-//finds the inorder predecessor and suc   
-//problem : once the pre and suc are found       
-//the morris inorder does not run completely
-//so the tree is modified significantly
+
 void inorder_suc_key(BSTNode *root,int k){
 	BSTNode *current = root;
 	BSTNode *closest_left_ancestor=NULL;
@@ -164,7 +161,7 @@ void inorder_suc_key(BSTNode *root,int k){
 }
 //   ******** check if given tree is BST is implemented in binary Tree File
 
-//find the inorder predecessor 
+//find the inorder predecessor
 void inorder_pred_key(BSTNode *root,int k){
 	BSTNode *current = root;
 	BSTNode *closest_right_ancestor = NULL;
@@ -180,7 +177,7 @@ void inorder_pred_key(BSTNode *root,int k){
 		}
 		else
 			break;
-	} 
+	}
 
 	if(current == NULL){
 		cout<<"The node was not found"<<endl;
@@ -200,7 +197,7 @@ void inorder_pred_key(BSTNode *root,int k){
 	}
 }
 //ASSUM:
-//both the keys must be there 
+//both the keys must be there
 //if it is not so
 //the lca is the lca of the nearest matches of the key
 //either immediately smaller or immediately larger
@@ -211,7 +208,7 @@ BSTNode * lca_bst(BSTNode *root,int key1,int key2){
 			current = current->left;
 		else if(key1>=current->data&key2>=current->data)
 			current=current->right;
-		else 
+		else
 			return current;
 	}
 
@@ -226,7 +223,7 @@ void print_range(BSTNode *root,int a,int b){
 	stack <BSTNode *> st;
 	st.push(root);
 	while(!st.empty()){
-		
+
 		if(current!=NULL){
 			if(current->data < a){
 				st.pop();
@@ -260,7 +257,7 @@ void k_smallest(BSTNode *root,int k){
 	while(!st.empty()){
 		if(current!=NULL){
 			if(current->left!=NULL){
-				st.push(current->left);	
+				st.push(current->left);
 			}
 			current=current->left;
 		}else{
@@ -274,25 +271,25 @@ void k_smallest(BSTNode *root,int k){
 				st.push(current->right);
 			current=current->right;
 		}
-		
+
 	}
 	cout<<"K is greater than number of nodes in the tree"<<endl;
 }
 //given the two arrays used for
 //creating a binary search tree
 //return true if both of them
-//lead to the construction of the 
+//lead to the construction of the
 //same binary search tree
 //NOTE:Without actually constructing the BST
 //helper function fills the level order array
-//with the level order traversal constructed from an 
+//with the level order traversal constructed from an
 //array used to construct bst
 //l_v=level order array
 void level_order_from_arr_of_bst(int arr[],int size,int l_v[]){
 	int l_v_start[size];
 	int l_v_end[size];
 	int i = 0;
-	int last=0;//points to the last element int the l_v array
+	int last=0;//position of the last element inserted in  the l_v array
 	l_v[i]=arr[0];
 	l_v_start[i]=1;
 	l_v_end[i]=size-1;
@@ -317,8 +314,8 @@ void level_order_from_arr_of_bst(int arr[],int size,int l_v[]){
 			else
 				aux2[size2++]=arr[j];
 		}
-		//replace arr from start to end by aux1 elements followed by 
-		//aux2 elements 
+		//replace arr from start to end by aux1 elements followed by
+		//aux2 elements
 		int k = start;
 		for(int j=0;j<size1;j++)
 			arr[k++]=aux1[j];
@@ -336,7 +333,7 @@ void level_order_from_arr_of_bst(int arr[],int size,int l_v[]){
 			l_v_end[last]=end;
 		}
 		i++;
-		
+
 	}
 }
 bool ifBSTSimilar(int arr1[],int arr2[],int size){
@@ -403,8 +400,8 @@ void addGreater(BSTNode *root){
 		}
 	}
 }
-//function to remove all the elements 
-//in a bst that lie outside the given range 
+//function to remove all the elements
+//in a bst that lie outside the given range
 //(min,max)
 //
 void remove_outside_range(BSTNode **root,int min,int max){
@@ -427,7 +424,7 @@ void remove_outside_range(BSTNode **root,int min,int max){
 					parent->right = current->right;
 					current=parent->right;
 				}
-				
+
 			}
 		}
 		else if(current->data > min){
@@ -539,7 +536,7 @@ void create_BST_from_sorted_array(BSTNode **root,int A[],int size){
 	start = 0;
 	end=((start+end)/2)-1;
 	BSTNode *current = *root;
-	
+
 	while(1){
 		if(start<end){
 			int half = (start+end)/2;
@@ -594,7 +591,7 @@ void insert(LLNode **head,int data){
 	}
 }
 LLNode *middle(LLNode *start,LLNode *end){
-	
+
 	LLNode *fast=start;
 	LLNode *slow=start;
 	while(1){
@@ -607,7 +604,7 @@ LLNode *middle(LLNode *start,LLNode *end){
 		slow=slow->next;
 		fast=fast->next->next;
 	}
-	
+
 	return slow;
 }
 void create_BST_from_sorted_linkedlist(BSTNode **root,LLNode *head){
@@ -642,20 +639,20 @@ void create_BST_from_sorted_linkedlist(BSTNode **root,LLNode *head){
 			continue;
 
 		}
-		 if(start->next==end||start==end){		 	
+		 if(start->next==end||start==end){
 
 			if(start->next==end){
 				if(start->data<current->data)
 					current->left = new BSTNode(start->data);
 				else
 					current->right = new BSTNode(start->data);
-				
+
 			}
 			start=end;
 			if(st.empty())
 				break;
 			while(start==end||start==NULL){
-				
+
 				current=st.top();st.pop();
 				start=st_start.top();st_start.pop();
 				end=st_end.top();st_end.pop();
@@ -669,11 +666,11 @@ void create_BST_from_sorted_linkedlist(BSTNode **root,LLNode *head){
 					break;
 			}
 		}
-		
+
 	}
 }
 //a doubly linked list can be represented using a tree node
-//the front and back are basically the left and right 
+//the front and back are basically the left and right
 void insert_dll(BSTNode **head,int data){
 	if(*head == NULL)
 		*head = new BSTNode(data);
@@ -681,13 +678,13 @@ void insert_dll(BSTNode **head,int data){
 		BSTNode *temp = *head;
 		while(temp->right != NULL)
 			temp=temp->right;
-		
+
 		temp->right = new BSTNode(data);
 		temp->right->left = temp;
 	}
 }
 BSTNode *middle(BSTNode *start,BSTNode *end){
-	
+
 	BSTNode *fast=start;
 	BSTNode *slow=start;
 	while(1){
@@ -700,7 +697,7 @@ BSTNode *middle(BSTNode *start,BSTNode *end){
 		slow=slow->right;
 		fast=fast->right->right;
 	}
-	
+
 	return slow;
 }
 void create_BST_from_sorted_doublelinkedlist(BSTNode **head,BSTNode **root){
@@ -757,7 +754,7 @@ void create_BST_from_sorted_doublelinkedlist(BSTNode **head,BSTNode **root){
 	}
 }
 
-//function boolean iftriplet_with_sum0 
+//function boolean iftriplet_with_sum0
 //true if a triplet with sum zero is found in a Balanced bst
 //helper function - restricted search
 //it receives two parameters 1.root 2.restricted_subtreenode1 3.restricted_subtreenode2
@@ -778,13 +775,13 @@ BSTNode* restricted_search(BSTNode *root,BSTNode* restricted_node1,BSTNode* rest
 				return NULL;
 			else
 				return c;
-			
+
 		}
 
 	}
 
 	return NULL;
-} 
+}
 
 bool ifTriplet_with_sum_0(BSTNode *root){
 	if(root == NULL)
@@ -807,7 +804,7 @@ bool ifTriplet_with_sum_0(BSTNode *root){
 				outer.push(c);
 		}
 		//go in the left subtree
-		
+
 		if(use->left!=NULL){
 			stack <BSTNode*> inner;
 			inner.push(use->left);
@@ -846,7 +843,7 @@ bool ifTriplet_with_sum_0(BSTNode *root){
 					c1=inner.top();inner.pop();
 
 					BSTNode *temp = restricted_search(root,use->right,use,-(use->data+c1->data));
-					
+
 					if(temp!=NULL){
 						//cout<<"One of the three triplets are "<<use->data<<", "<<c1->data<<", "<<temp->data<<endl;
 						iffound=true;
@@ -858,7 +855,7 @@ bool ifTriplet_with_sum_0(BSTNode *root){
 				}
 			}
 		}
-		
+
 	}
 	return iffound;
 }
@@ -868,16 +865,16 @@ bool ifTriplet_with_sum_0(BSTNode *root){
 BSTNode* findParent (BSTNode *root,BSTNode* node){
 
 }
-//exchanges two BST nodes of a BSTsearch Tree 
-//use cases 
+//exchanges two BST nodes of a BSTsearch Tree
+//use cases
 //first and second are both not null
-//	first ,second ,first_parent,second_parent 
+//	first ,second ,first_parent,second_parent
 //1.first_parent = null,second_parent !=null
 //1-a second_parent = first , first _parent!=null
 //1-b second_parent = first , first_parent == null
 //2.second_parent can not be null
 //3.first_parent = second_parent
-//4.  
+//4.
 void exchange(BSTNode **root,BSTNode *first,BSTNode *second,BSTNode *first_parent,BSTNode *second_parent){
 	if(second_parent == null || first == null || second == null)
 		return;
@@ -896,7 +893,7 @@ void exchange(BSTNode **root,BSTNode *first,BSTNode *second,BSTNode *first_paren
 
 	if(first_parent == null){
 		//can second be a child ?
-		
+
 
 		if(second_parent != first){
 			BSTNode *first_left = first -> left ; first -> left = null;
@@ -904,13 +901,13 @@ void exchange(BSTNode **root,BSTNode *first,BSTNode *second,BSTNode *first_paren
 
 			BSTNode *second_left = second -> left ; second -> left = null;
 			BSTNode *second_right = second -> right ; second -> right = null;
-			
+
 			*root = second ;
 
 			if(second_parent -> left == second)
 				second_parent -> left = first;
 			else
-				second_parent -> right = first 
+				second_parent -> right = first
 			BSTNode *temp = second ;
 			second = first ;
 			first  = second ;
@@ -934,7 +931,7 @@ void exchange(BSTNode **root,BSTNode *first,BSTNode *second,BSTNode *first_paren
 
 			BSTNode *second_left = second -> left ; second -> left = null;
 			BSTNode *second_right = second -> right ; second -> right = null;
-			
+
 			if(first_parent -> left = first)
 				first_parent -> left = second ;
 			else
@@ -1020,7 +1017,7 @@ void two_nodes_swapped_correct_bst(BSTNode **root){
 
 		exchange(root,first,second,first_parent,second_parent);
 
-		
+
 	}
 	else{
 		cout <<"The swapped nodes are "<<first->data<<" and "<<first_next->data<<endl;
@@ -1032,7 +1029,7 @@ void two_nodes_swapped_correct_bst(BSTNode **root){
 
 	}
 
-	//find parent of both 
+	//find parent of both
 
 
 }
@@ -1113,7 +1110,7 @@ void print_merged_BST(BSTNode *root1,BSTNode *root2){
 			}else{
 				cout<<use2->data<<" "<<cout<<use1->data<<" ";
 			}
-			
+
 			/*c1=use1->right;
 			if(c1!=NULL)
 				st1.push(use1);*/
@@ -1143,7 +1140,7 @@ void print_merged_BST(BSTNode *root1,BSTNode *root2){
 			}else{
 				cout<<use2->data<<" "<<cout<<use1->data<<" ";
 			}
-			
+
 			/*c1=use1->right;
 			if(c1!=NULL)
 				st1.push(use1);*/
@@ -1170,7 +1167,7 @@ void print_merged_BST(BSTNode *root1,BSTNode *root2){
 	}
 }
 //gives the node for Bst with node->data=key or else
-//the smallest node which is greater than key 
+//the smallest node which is greater than key
 BSTNode * ceiling(BSTNode *root,int key){
 	BSTNode *c=root;
 	BSTNode *ans=NULL;
@@ -1215,13 +1212,13 @@ BSTNode * floor(BSTNode *root,int key){
 	}
 	return ans;
 }
-//FIND THE NUMBER OF ALL POSSIBLE BST 
-//THAT CAN BE CONSTRUCTED FROM 
-//N-KEYS - catalan Number 
+//FIND THE NUMBER OF ALL POSSIBLE BST
+//THAT CAN BE CONSTRUCTED FROM
+//N-KEYS - catalan Number
 //code in generalAlgos.cpp
 
-//Convert BST to a sorted 
-//DLL returns head of the 
+//Convert BST to a sorted
+//DLL returns head of the
 //DLL
 BSTNode * BST_to_sortedDLL(BSTNode *root){
 	BSTNode *current = NULL;
@@ -1262,7 +1259,7 @@ BSTNode * BST_to_sortedDLL(BSTNode *root){
 			current->right = right_leftest;
 		}
 		current->left = NULL;
-		
+
 	}
 	//convert to doubly linked list here
 	BSTNode *temp = head;
@@ -1296,7 +1293,7 @@ int main(int argc, char const *argv[])
 {
 	BSTNode *root = NULL;
 	BSTNode *head = NULL;
-	
+
 	//BSTInsert(&root);
 	exact_tree_input(&root);
 	print(root);
@@ -1314,6 +1311,6 @@ int main(int argc, char const *argv[])
 
 	//printf ("It took (%f seconds).\n",((float)t)/CLOCKS_PER_SEC);
 
-	
+
 	return 0;
 }

@@ -54,7 +54,7 @@ void createArray(int size){
 
   arr = arr1;
 }
-pair<int,Edge*>* bar(vector<pair<int,Edge*>> v){
+pair<int,Edge*>* bar(vector< pair<int,Edge*> > v){
   return &v[0];
 }
 int main(int argc, char const *argv[]) {

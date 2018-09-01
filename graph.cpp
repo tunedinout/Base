@@ -8,7 +8,143 @@
 #include <vector>
 #define null NULL
 using namespace std;
+template <typename T>
+class MinHeap{
+	private :
 
+  //first key will be the priority
+  //second will be pointer to the object associate with it
+  vector<pair<int,T*>*> v;
+
+
+  public :
+
+  int getSize(){
+    return (int)v.size();
+  }
+  int parent(int i){
+    return (i-1)/2;
+  }
+  int left(int i){
+    return 2*i + 1;
+  }
+  int right(int i){
+    return 2*i + 2;
+  }
+  int getMin(){
+    if(v.size()==0){
+      cout << "ERROR : No Elements in the MinHeap";
+      exit(0);
+    }
+    return v[0]->first;
+  }
+
+
+  //sinks down erroneous value
+  //iterative version
+  void minHeapify(int i){
+    int p = i,l,r;
+    int least = 0;
+    while(p<v.size()){
+      l = left(p);r = right(p);
+
+      if(l < v.size()&&v[l]->first < v[p]->first)
+      least = l;
+      else
+      least = p;
+
+      if(r < v.size()&& v[least]->first > v[r]->first)
+      least = r;
+
+      //exchange
+      if(least!=p){
+        pair<int,T*> * temp = new pair<int,T*> (v[p]->first,v[p]->second);
+        v[p] = v[least];
+        v[least] = temp;
+
+        p = least;
+      }else
+      break;
+
+    }
+
+  }
+  //remove and return the min priority with the object
+  pair<int,T*>* extractMin(){
+    pair<int,T*> *p;
+    p = v[0];
+
+    int size = v.size();
+    pair<int,T*> *lastElement = v[size-1];
+    v[0]=lastElement;
+    v.resize(size-1);
+
+
+    minHeapify(0);
+    return p;
+  }
+
+  //increase to key && key > priority[i]
+  // after this func call priority[i] = key
+  //where key was bigger than priority[i]
+  void decreaseKey(int i,int key){
+    if(key > v[i]->first){
+      cout <<"ERROR new key is greater than existing key." << endl;
+      return;
+    }
+
+    //on decreasing the key the heap property for holds for its subtree
+    //but not for it parents
+
+    //it must be moved up to its right place
+    v[i]->first = key;
+    while(i >0 && v[i]->first < v[parent(i)]->first){
+      //exchange with parents
+      pair<int,T*> *temp = v[i];
+      v[i] = v[parent(i)];
+      v[parent(i)] = temp;
+      i = parent(i);
+    }
+  }
+
+
+  void insertKey(int key,T *t){
+    v.push_back(new pair<int,T*>(INT_MAX,t));
+
+    decreaseKey(v.size()-1,key);
+  }
+
+  void printHeapArray(){
+    cout <<"Print MinHeap by priority and data------------------------"<<endl;
+    //iteration require the typename
+    // for( vector<pair<int,T*>>::iterator it = v.begin();it != v.end();++it){
+    //   cout <<(*it)->first<<" "<<(*it)->second->print()<<endl;
+    // }
+
+    for(int i=0;i<v.size();i++)
+    cout << v[i]->first<< " "<<(v[i]->second) ->print()<<endl;
+    cout <<" ----------   xxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------"<<endl;
+  }
+
+  void print(){
+
+      for(int i=0;i<v.size();i++){
+        cout << v[i]->first <<" : ";
+
+        if(left(i)  < v.size() )
+          cout << v[left(i)]->first <<" ";
+
+        if(right(i) < v.size())
+          cout << v[right(i)]->second ;
+        cout <<endl;
+      }
+  }
+  pair<int,T*>* getData(int i){
+
+    pair<int,T*>* temp = v[i];
+    return temp;
+  }
+};
 class graph_node{
 public:
 	int data;
@@ -639,6 +775,9 @@ public:
   EDGE(int a,int b){
     dest = b;src = a;weight = 0;
   }
+	void print(){
+		cout << src << " ---> "<<dest << " |"<<weight<<" |";
+	}
 };
 class lessThanEDGE{
   public :
@@ -682,7 +821,55 @@ void MSTKruskal(graph *g){
 }
 void MSTPrims(graph *g){
 		//since we are finding minimum spanning tree
-		
+		//it is a fact that this graph will be connected
+
+		//stuck at the commented
+		//once the key value is decreased for a vertex
+		//the index of the vertex in the minHeap is not known
+
+		int key[g->v];bool inHeap[g->v];
+		key[0] = 0;
+		inHeap[0]=true;
+		for(int i=1;i<g->v;i++){
+			key[i]=INT_MAX;
+			inHeap[i]=true;
+		}
+		vector<EDGE*> mstEdges;
+		int prev = -1;
+
+
+		MinHeap<int> minHeap;
+		for(int i=0;i<g->v;i++){
+			minHeap.insertKey(key[i],new int(i));
+		}
+
+		while(minHeap.getSize()!=0){
+			pair<int,int*> *p = minHeap.extractMin();
+			int u = *(p->second);
+
+			if(prev!=-1)
+				mstEdges.push_back(new EDGE(prev,u,key[u]));
+			prev = u;
+			inHeap[u]=false;
+
+			graph_node * temp = g->adj[u]->next;
+			while(temp!=null){
+				int v = temp->data;
+				int edgeWeight = temp->weight;
+				if(edgeWeight < key[v]&&inHeap[v]){
+					key[v] = edgeWeight;
+				//	minHeap.decreaseKey()
+				}
+
+			}
+		}
+		cout <<"----------------- MST Edges in order they were visted by prims ----------------"<<endl;
+		for(vector<EDGE*>::iterator it = mstEdges.begin();it!=mstEdges.end();it++){
+			(*it) -> print();
+			cout << endl;
+		}
+
+		cout << " ------------- xxxxxxxxxxxxxxxxxxxxxxxxxxxx ----------------------------------"<<endl;
 }
 //ifAdded = if added in the list
 void DFS_postorder(graph *g,int v){
@@ -1385,7 +1572,7 @@ int main(int argc, char const *argv[])
 
 
 	//connectedComponents(g);
-	MSTKruskal(g);
+	MSTPrims(g);
 
 
 
