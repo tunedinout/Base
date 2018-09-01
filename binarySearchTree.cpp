@@ -284,20 +284,22 @@ void k_smallest(BSTNode *root,int k){
 //helper function fills the level order array
 //with the level order traversal constructed from an
 //array used to construct bst
-//l_v=level order array
-void level_order_from_arr_of_bst(int arr[],int size,int l_v[]){
-	int l_v_start[size];
-	int l_v_end[size];
+//levelOrder=level order array
+void level_order_from_arr_of_bst(int arr[],int size,int levelOrder[]){
+	int subtree_start[size];
+	int subtree_end[size];
 	int i = 0;
-	int last=0;//position of the last element inserted in  the l_v array
-	l_v[i]=arr[0];
-	l_v_start[i]=1;
-	l_v_end[i]=size-1;
+	int last=0;//position of the last element inserted in  the levelOrder array
+	levelOrder[i]=arr[0];
+	//subtree start - to - end contains both left and right subtree
+	//not necessarily separted as left and right
+	subtree_start[i]=1;
+	subtree_end[i]=size-1;
 
 	while(i!=size){
-		int root = l_v[i];
-		int start = l_v_start[i];
-		int end = l_v_end[i];
+		int rootOfSubtree = levelOrder[i];
+		int start = subtree_start[i];
+		int end = subtree_end[i];
 
 		if(start>end){
 			i++;
@@ -309,7 +311,7 @@ void level_order_from_arr_of_bst(int arr[],int size,int l_v[]){
 		int aux1[end-start+1],aux2[end-start+1],size1=0,size2=0;
 
 		for(int j=start;j<=end;j++){
-			if(arr[j]<root)
+			if(arr[j]<rootOfSubtree)
 				aux1[size1++]=arr[j];
 			else
 				aux2[size2++]=arr[j];
@@ -323,14 +325,14 @@ void level_order_from_arr_of_bst(int arr[],int size,int l_v[]){
 		for(int j=0;j<size2;j++)
 			arr[k++]=aux2[j];
 		if(start<division){
-			l_v[++last]=arr[start];
-			l_v_start[last]=start+1;
-			l_v_end[last]=division-1;
+			levelOrder[++last]=arr[start];
+			subtree_start[last]=start+1;
+			subtree_end[last]=division-1;
 		}
 		if(division<=end){
-			l_v[++last]=arr[division];
-			l_v_start[last]=division+1;
-			l_v_end[last]=end;
+			levelOrder[++last]=arr[division];
+			subtree_start[last]=division+1;
+			subtree_end[last]=end;
 		}
 		i++;
 
